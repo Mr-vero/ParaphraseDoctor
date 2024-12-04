@@ -297,3 +297,81 @@ class DocumentParaphraser:
         self._save_docx(paraphrased_structure, output_path)
         
         return output_path 
+
+    def _read_docx(self, file_path):
+        """Extract text from DOCX with research paper structure preservation"""
+        doc = Document(file_path)
+        document_structure = []
+        
+        for paragraph in doc.paragraphs:
+            style = paragraph.style.name
+            text = paragraph.text.strip()
+            
+            if not text:  # Skip empty paragraphs
+                continue
+            
+            # Create structured content
+            content = {
+                'type': 'paragraph' if not style.startswith('Heading') else 'heading',
+                'style': style,
+                'text': text,
+                'alignment': paragraph.alignment
+            }
+            
+            # Add level for headings
+            if content['type'] == 'heading':
+                try:
+                    content['level'] = int(style[-1])
+                except (ValueError, IndexError):
+                    content['level'] = 1
+                
+            document_structure.append(content)
+        
+        return document_structure
+
+    def _read_pdf(self, file_path):
+        """Extract text from PDF with structure preservation"""
+        reader = PdfReader(file_path)
+        document_structure = []
+        
+        for page in reader.pages:
+            text = page.extract_text()
+            if text.strip():
+                document_structure.append({
+                    'type': 'paragraph',
+                    'style': 'Normal',
+                    'text': text,
+                    'alignment': 0  # Left alignment as default
+                })
+        
+        return document_structure
+
+    def _read_txt(self, file_path):
+        """Read text file with basic structure preservation"""
+        document_structure = []
+        
+        with open(file_path, 'r', encoding='utf-8') as file:
+            for line in file:
+                text = line.strip()
+                if text:
+                    document_structure.append({
+                        'type': 'paragraph',
+                        'style': 'Normal',
+                        'text': text,
+                        'alignment': 0  # Left alignment as default
+                    })
+        
+        return document_structure
+
+    def read_document(self, file_path):
+        """Read different document formats and extract text with structure"""
+        file_extension = os.path.splitext(file_path)[1].lower()
+        
+        if file_extension == '.pdf':
+            return self._read_pdf(file_path)
+        elif file_extension == '.docx':
+            return self._read_docx(file_path)
+        elif file_extension == '.txt':
+            return self._read_txt(file_path)
+        else:
+            raise ValueError(f"Unsupported file format: {file_extension}")
