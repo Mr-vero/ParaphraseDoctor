@@ -1,0 +1,204 @@
+2024-12-04 14:40:46,767 - INFO - HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2024-12-04 14:40:46,775 - INFO - HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
+2024-12-04 14:40:47,547 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2024-12-04 14:40:47,829 - INFO - HTTP Request: GET https://api.gradio.app/v3/tunnel-request "HTTP/1.1 200 OK"
+2024-12-04 14:40:54,935 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining a formal academic tone suitable for scientific journals or Indonesian "skripsi"
+        - DO NOT modify any of the following:
+            * Citations (e.g., [Author, Year])
+            * Footnotes
+            * Religious texts/quotes (from Quran, Bible, or other religious sources)
+        - Preserving all technical terms
+        - Keeping the same meaning
+        - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+        - If the input is not in English, paraphrase in that same language
+        
+        Text: Bagi masyarakat muslim harus dipastikan bahwa makanan yang dikonsumsi harus halal dan bebas dari bahan dan barang yang tidak halal (halalan thayyiban). Kepastian makanan halal sangat penting karena merupakan jaminan ketentraman batin sebagai manifestasi ajaran agama. Konsumen yang cerdas dan berwawasan luas tentunya akan menghindari produk di bawah standar karena tidak hanya merugikan secara finansial tetapi juga berbahaya bagi kesehatan. Konsep halal dan thoyyib didefinisikan dalam Al-Qur'an Al-Baqarah ayat 168, dimana disebutkan bahwa halal dan thoyyib berlaku untuk semua manusia, yaitu:
+        
+        Remember: 
+        - Your paraphrase must be in the SAME LANGUAGE as the input text
+        - Keep all citations, footnotes, and religious quotes exactly as they appear in the original text
+2024-12-04 14:40:56,777 - INFO - Received response from Gemini:
+Penting bagi umat Muslim untuk memastikan bahwa konsumsi makanan mereka senantiasa halal dan terbebas dari unsur-unsur yang diharamkan (halalan thayyiban).  Jaminan kehalalan pangan sangat krusial karena menjamin ketenangan jiwa sebagai implementasi ajaran agama. Konsumen yang bijak dan berpengetahuan luas niscaya akan menjauhi produk yang tidak memenuhi standar, mengingat potensi kerugian finansial dan bahaya kesehatan yang ditimbulkannya.  Definisi halal dan thoyyib termaktub dalam Al-Qur'an surat Al-Baqarah ayat 168, yang menjelaskan bahwa prinsip halal dan thoyyib berlaku universal bagi seluruh umat manusia:
+
+2024-12-04 14:40:56,779 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining a formal academic tone suitable for scientific journals or Indonesian "skripsi"
+        - DO NOT modify any of the following:
+            * Citations (e.g., [Author, Year])
+            * Footnotes
+            * Religious texts/quotes (from Quran, Bible, or other religious sources)
+        - Preserving all technical terms
+        - Keeping the same meaning
+        - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+        - If the input is not in English, paraphrase in that same language
+        
+        Text: Artinya : Wahai manusia, makanlah sebagian (makanan) di bumi yang halal lagi baik dan janganlah mengikuti langkah-langkah setan. Sesungguhnya ia bagimu merupakan musuh yang nyata.
+        
+        Remember: 
+        - Your paraphrase must be in the SAME LANGUAGE as the input text
+        - Keep all citations, footnotes, and religious quotes exactly as they appear in the original text
+2024-12-04 14:40:57,499 - INFO - Received response from Gemini:
+Ayat tersebut bermakna: Hai manusia, konsumsilah makanan yang halal dan baik di muka bumi ini dan janganlah meneladani perilaku setan.  Karena sesungguhnya, ia adalah musuh nyata bagi kalian.
+
+2024-12-04 14:41:42,473 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining a formal academic tone suitable for scientific journals or Indonesian "skripsi"
+        - DO NOT modify any of the following:
+            * Citations (e.g., [Author, Year])
+            * Footnotes
+            * Religious texts/quotes (from Quran, Bible, or other religious sources)
+        - Preserving all technical terms
+        - Keeping the same meaning
+        - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+        - If the input is not in English, paraphrase in that same language
+        
+        Text: PENGARUH LIFESTYLE, SUBJECTIVE NORM, DAN HALAL AWARENESS TERHADAP KEPUTUSAN PEMBELIAN MAKANAN BERSERTIFIKAT HALAL PADA GENERASI Z DI KOTA JAMBI
+        
+        Remember: 
+        - Your paraphrase must be in the SAME LANGUAGE as the input text
+        - Keep all citations, footnotes, and religious quotes exactly as they appear in the original text
+2024-12-04 14:41:43,127 - INFO - Received response from Gemini:
+Analisis ini meneliti pengaruh gaya hidup, norma subyektif, dan kesadaran halal terhadap keputusan pembelian makanan bersertifikat halal pada generasi Z di Kota Jambi.
+
+2024-12-04 14:41:43,128 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining a formal academic tone suitable for scientific journals or Indonesian "skripsi"
+        - DO NOT modify any of the following:
+            * Citations (e.g., [Author, Year])
+            * Footnotes
+            * Religious texts/quotes (from Quran, Bible, or other religious sources)
+        - Preserving all technical terms
+        - Keeping the same meaning
+        - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+        - If the input is not in English, paraphrase in that same language
+        
+        Text: SKRIPSI
+        
+        Remember: 
+        - Your paraphrase must be in the SAME LANGUAGE as the input text
+        - Keep all citations, footnotes, and religious quotes exactly as they appear in the original text
+2024-12-04 14:41:43,636 - INFO - Received response from Gemini:
+Tesis.
+
+2024-12-04 14:41:43,636 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining a formal academic tone suitable for scientific journals or Indonesian "skripsi"
+        - DO NOT modify any of the following:
+            * Citations (e.g., [Author, Year])
+            * Footnotes
+            * Religious texts/quotes (from Quran, Bible, or other religious sources)
+        - Preserving all technical terms
+        - Keeping the same meaning
+        - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+        - If the input is not in English, paraphrase in that same language
+        
+        Text: Diajukan Untuk Memenuhi Sebagian Syarat-Syarat Guna Memperoleh Gelar Sarjana Ekonomi
+        
+        Remember: 
+        - Your paraphrase must be in the SAME LANGUAGE as the input text
+        - Keep all citations, footnotes, and religious quotes exactly as they appear in the original text
+2024-12-04 14:41:44,207 - INFO - Received response from Gemini:
+Disusun sebagai salah satu persyaratan untuk memperoleh gelar Sarjana Ekonomi.
+
+2024-12-04 14:41:44,208 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining a formal academic tone suitable for scientific journals or Indonesian "skripsi"
+        - DO NOT modify any of the following:
+            * Citations (e.g., [Author, Year])
+            * Footnotes
+            * Religious texts/quotes (from Quran, Bible, or other religious sources)
+        - Preserving all technical terms
+        - Keeping the same meaning
+        - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+        - If the input is not in English, paraphrase in that same language
+        
+        Text: Annisa
+        
+        Remember: 
+        - Your paraphrase must be in the SAME LANGUAGE as the input text
+        - Keep all citations, footnotes, and religious quotes exactly as they appear in the original text
+2024-12-04 14:41:44,692 - INFO - Received response from Gemini:
+Penulis.
+
+2024-12-04 14:41:44,694 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining a formal academic tone suitable for scientific journals or Indonesian "skripsi"
+        - DO NOT modify any of the following:
+            * Citations (e.g., [Author, Year])
+            * Footnotes
+            * Religious texts/quotes (from Quran, Bible, or other religious sources)
+        - Preserving all technical terms
+        - Keeping the same meaning
+        - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+        - If the input is not in English, paraphrase in that same language
+        
+        Text: C1F020019
+        
+        Remember: 
+        - Your paraphrase must be in the SAME LANGUAGE as the input text
+        - Keep all citations, footnotes, and religious quotes exactly as they appear in the original text
+2024-12-04 14:41:45,261 - INFO - Received response from Gemini:
+Nomor Induk Mahasiswa (NIM): C1F020019
+
+2024-12-04 14:41:45,263 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining a formal academic tone suitable for scientific journals or Indonesian "skripsi"
+        - DO NOT modify any of the following:
+            * Citations (e.g., [Author, Year])
+            * Footnotes
+            * Religious texts/quotes (from Quran, Bible, or other religious sources)
+        - Preserving all technical terms
+        - Keeping the same meaning
+        - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+        - If the input is not in English, paraphrase in that same language
+        
+        Text: PROGRAM STUDI EKONOMI ISLAM
+        
+        Remember: 
+        - Your paraphrase must be in the SAME LANGUAGE as the input text
+        - Keep all citations, footnotes, and religious quotes exactly as they appear in the original text
+2024-12-04 14:41:45,755 - INFO - Received response from Gemini:
+Jurusan Ekonomi Islam.
+
+2024-12-04 14:41:45,756 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining a formal academic tone suitable for scientific journals or Indonesian "skripsi"
+        - DO NOT modify any of the following:
+            * Citations (e.g., [Author, Year])
+            * Footnotes
+            * Religious texts/quotes (from Quran, Bible, or other religious sources)
+        - Preserving all technical terms
+        - Keeping the same meaning
+        - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+        - If the input is not in English, paraphrase in that same language
+        
+        Text: FAKULTAS EKONOMI DAN BISNIS
+        
+        Remember: 
+        - Your paraphrase must be in the SAME LANGUAGE as the input text
+        - Keep all citations, footnotes, and religious quotes exactly as they appear in the original text
+2024-12-04 14:41:46,313 - INFO - Received response from Gemini:
+Fakultas Ekonomi dan Bisnis Islam.
+
+2024-12-04 14:41:46,315 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining a formal academic tone suitable for scientific journals or Indonesian "skripsi"
+        - DO NOT modify any of the following:
+            * Citations (e.g., [Author, Year])
+            * Footnotes
+            * Religious texts/quotes (from Quran, Bible, or other religious sources)
+        - Preserving all technical terms
+        - Keeping the same meaning
+        - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+        - If the input is not in English, paraphrase in that same language
+        
+        Text: UNIVERSITAS JAMBI
+        
+        Remember: 
+        - Your paraphrase must be in the SAME LANGUAGE as the input text
+        - Keep all citations, footnotes, and religious quotes exactly as they appear in the original text
+2024-12-04 14:41:46,814 - INFO - Received response from Gemini:
+Universitas Jambi.
+

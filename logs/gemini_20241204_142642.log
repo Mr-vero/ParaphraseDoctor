@@ -1,0 +1,42 @@
+2024-12-04 14:26:42,536 - INFO - HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2024-12-04 14:26:42,545 - INFO - HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
+2024-12-04 14:26:43,201 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2024-12-04 14:26:43,527 - INFO - HTTP Request: GET https://api.gradio.app/v3/tunnel-request "HTTP/1.1 200 OK"
+2024-12-04 14:27:34,782 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining academic tone
+        - Preserving technical terms and citations
+        - Keeping the same meaning
+        
+        Text: Bagi masyarakat muslim harus dipastikan bahwa makanan yang dikonsumsi harus halal dan bebas dari bahan dan barang yang tidak halal (halalan thayyiban). Kepastian makanan halal sangat penting karena merupakan jaminan ketentraman batin sebagai manifestasi ajaran agama. Konsumen yang cerdas dan berwawasan luas tentunya akan menghindari produk di bawah standar karena tidak hanya merugikan secara finansial tetapi juga berbahaya bagi kesehatan. Konsep halal dan thoyyib didefinisikan dalam Al-Qur'an Al-Baqarah ayat 168, dimana disebutkan bahwa halal dan thoyyib berlaku untuk semua manusia, yaitu:
+2024-12-04 14:27:35,221 - ERROR - Error in Gemini API call: 429 Quota exceeded for quota metric 'Generate Content API requests per minute' and limit 'GenerateContent request limit per minute for a region' of service 'generativelanguage.googleapis.com' for consumer 'project_number:1011739300107'. [reason: "RATE_LIMIT_EXCEEDED"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+metadata {
+  key: "quota_metric"
+  value: "generativelanguage.googleapis.com/generate_content_requests"
+}
+metadata {
+  key: "quota_location"
+  value: "us-west4"
+}
+metadata {
+  key: "quota_limit"
+  value: "GenerateContentRequestsPerMinutePerProjectPerRegion"
+}
+metadata {
+  key: "quota_limit_value"
+  value: "0"
+}
+metadata {
+  key: "consumer"
+  value: "projects/1011739300107"
+}
+, links {
+  description: "Request a higher quota limit."
+  url: "https://cloud.google.com/docs/quotas/help/request_increase"
+}
+]

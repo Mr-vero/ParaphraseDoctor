@@ -1,0 +1,15 @@
+2024-12-04 14:36:17,450 - INFO - HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2024-12-04 14:36:17,459 - INFO - HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
+2024-12-04 14:36:18,654 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2024-12-04 14:36:18,887 - INFO - HTTP Request: GET https://api.gradio.app/v3/tunnel-request "HTTP/1.1 200 OK"
+2024-12-04 14:36:26,879 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining academic tone
+        - Preserving technical terms and citations
+        - Keeping the same meaning
+        - Maintaining the original language of the text (do not translate)
+        
+        Text: Bagi masyarakat muslim harus dipastikan bahwa makanan yang dikonsumsi harus halal dan bebas dari bahan dan barang yang tidak halal (halalan thayyiban). Kepastian makanan halal sangat penting karena merupakan jaminan ketentraman batin sebagai manifestasi ajaran agama. Konsumen yang cerdas dan berwawasan luas tentunya akan menghindari produk di bawah standar karena tidak hanya merugikan secara finansial tetapi juga berbahaya bagi kesehatan. Konsep halal dan thoyyib didefinisikan dalam Al-Qur'an Al-Baqarah ayat 168, dimana disebutkan bahwa halal dan thoyyib berlaku untuk semua manusia, yaitu:
+2024-12-04 14:36:29,264 - INFO - Received response from Gemini:
+The consumption of halal and tayyib food is imperative for Muslim communities to ensure the absence of non-halal ingredients and substances.  This certainty regarding halal food is crucial for maintaining inner peace, reflecting a core tenet of the faith.  Informed and discerning consumers will naturally avoid substandard products, recognizing the potential for not only financial loss but also health risks.  The Quran, specifically Al-Baqarah 2:168, defines halal and tayyib as applicable to all humankind;  the verse states:
+

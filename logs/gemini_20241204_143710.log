@@ -1,0 +1,46 @@
+2024-12-04 14:37:10,531 - INFO - HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2024-12-04 14:37:10,543 - INFO - HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
+2024-12-04 14:37:11,236 - INFO - HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2024-12-04 14:37:11,538 - INFO - HTTP Request: GET https://api.gradio.app/v3/tunnel-request "HTTP/1.1 200 OK"
+2024-12-04 14:37:28,088 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining academic tone
+        - Preserving technical terms and citations
+        - Keeping the same meaning
+        - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+        - If the input is not in English, paraphrase in that same language
+        
+        Text: Bagi masyarakat muslim harus dipastikan bahwa makanan yang dikonsumsi harus halal dan bebas dari bahan dan barang yang tidak halal (halalan thayyiban). Kepastian makanan halal sangat penting karena merupakan jaminan ketentraman batin sebagai manifestasi ajaran agama. Konsumen yang cerdas dan berwawasan luas tentunya akan menghindari produk di bawah standar karena tidak hanya merugikan secara finansial tetapi juga berbahaya bagi kesehatan. Konsep halal dan thoyyib didefinisikan dalam Al-Qur'an Al-Baqarah ayat 168, dimana disebutkan bahwa halal dan thoyyib berlaku untuk semua manusia, yaitu:
+        
+        Remember: Your paraphrase must be in the SAME LANGUAGE as the input text.
+2024-12-04 14:37:29,682 - INFO - Received response from Gemini:
+Keharusan mengonsumsi makanan halal dan thayyiban (bebas dari bahan dan barang haram) bagi umat Muslim mutlak diperlukan.  Jaminan ketentraman batin, sebagai perwujudan ajaran agama, sangat bergantung pada kepastian kehalalan makanan tersebut.  Konsumen yang bijak dan berpengetahuan luas akan menghindari produk yang tidak memenuhi standar, mengingat potensi kerugian finansial dan bahaya kesehatan yang ditimbulkannya.  Definisi halal dan thoyyib terdapat dalam Al-Qur'an surat Al-Baqarah ayat 168, yang menegaskan bahwa prinsip ini berlaku universal bagi seluruh umat manusia.
+
+2024-12-04 14:38:38,455 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining academic tone
+        - Preserving technical terms and citations
+        - Keeping the same meaning
+        - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+        - If the input is not in English, paraphrase in that same language
+        
+        Text: Bagi masyarakat muslim harus dipastikan bahwa makanan yang dikonsumsi harus halal dan bebas dari bahan dan barang yang tidak halal (halalan thayyiban). Kepastian makanan halal sangat penting karena merupakan jaminan ketentraman batin sebagai manifestasi ajaran agama. Konsumen yang cerdas dan berwawasan luas tentunya akan menghindari produk di bawah standar karena tidak hanya merugikan secara finansial tetapi juga berbahaya bagi kesehatan. Konsep halal dan thoyyib didefinisikan dalam Al-Qur'an Al-Baqarah ayat 168, dimana disebutkan bahwa halal dan thoyyib berlaku untuk semua manusia, yaitu:
+        
+        Remember: Your paraphrase must be in the SAME LANGUAGE as the input text.
+2024-12-04 14:38:39,830 - INFO - Received response from Gemini:
+Umat Muslim wajib memastikan konsumsi makanan halal dan thayyiban, terbebas dari bahan atau barang haram.  Kehalalan makanan menjadi krusial karena menjamin ketenangan batin, sebagai manifestasi ajaran keagamaan.  Konsumen cerdas dan berwawasan akan menjauhi produk substandard, mengingat potensi kerugian ekonomi dan ancaman kesehatan yang ditimbulkannya.  Al-Qur'an surat Al-Baqarah ayat 168 mendefinisikan konsep halal dan thoyyib, menekankan aplikasinya yang universal bagi seluruh umat manusia.
+
+2024-12-04 14:38:39,832 - INFO - Sending prompt to Gemini:
+Paraphrase the following text while:
+        - Maintaining academic tone
+        - Preserving technical terms and citations
+        - Keeping the same meaning
+        - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+        - If the input is not in English, paraphrase in that same language
+        
+        Text: Artinya : Wahai manusia, makanlah sebagian (makanan) di bumi yang halal lagi baik dan janganlah mengikuti langkah-langkah setan. Sesungguhnya ia bagimu merupakan musuh yang nyata.
+        
+        Remember: Your paraphrase must be in the SAME LANGUAGE as the input text.
+2024-12-04 14:38:40,528 - INFO - Received response from Gemini:
+Ayat tersebut bermakna:  Hai manusia, konsumsilah makanan yang halal dan baik di muka bumi ini dan janganlah mengikuti jejak langkah setan, karena ia adalah musuh yang nyata bagimu.
+

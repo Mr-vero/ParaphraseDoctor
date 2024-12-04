@@ -12,119 +12,145 @@ from concurrent.futures import ThreadPoolExecutor
 import numpy as np
 from docx.shared import Pt, RGBColor
 import math
+from google.generativeai import GenerativeModel
+import google.generativeai as genai
+from dotenv import load_dotenv
+import logging
+from datetime import datetime
+import json
+import time
 
 class DocumentParaphraser:
     def __init__(self):
-        # Initialize models - using multiple models for different sections
-        self.models = {
-            'main': {
-                'name': "Wikidepia/IndoT5-base-paraphrase",
-                'max_length': 128,
-                'batch_size': 4
-            },
-            'technical': {
-                'name': "google/mt5-small",  # Better for technical content
-                'max_length': 64,
-                'batch_size': 8
-            }
+        load_dotenv()  # Load environment variables from .env file
+        api_key = os.getenv('GEMINI_API_KEY')
+        if not api_key:
+            raise ValueError("GEMINI_API_KEY not found in environment variables")
+        
+        genai.configure(api_key=api_key)
+        
+        # Configure optimized generation settings
+        generation_config = {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 40,
+            "max_output_tokens": 8192,
+            # "response_mime_type": "text/plain",
         }
         
-        # Load models
-        self.tokenizers = {}
-        self.model_instances = {}
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.model = genai.GenerativeModel(
+            model_name="gemini-1.5-flash",
+            generation_config=generation_config
+        )
         
-        for key, model_info in self.models.items():
-            self.tokenizers[key] = AutoTokenizer.from_pretrained(model_info['name'])
-            self.model_instances[key] = AutoModelForSeq2SeqLM.from_pretrained(model_info['name']).to(self.device)
-
-        # Special content patterns
-        self.patterns = {
-            'equation': r'\$.*?\$|\\\[.*?\\\]',
-            'citation': r'\[(.*?)\]',
-            'reference': r'(?<=[^A-Za-z])\d{4}(?=[^A-Za-z])',
-            'technical_term': r'(?<![A-Za-z])[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*(?![A-Za-z])'
+        # Initialize chat session for better context handling
+        self.chat_session = self.model.start_chat(history=[])
+        
+        # Set up logging
+        log_dir = "logs"
+        if not os.path.exists(log_dir):
+            os.makedirs(log_dir)
+            
+        log_file = f"logs/llm_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+        logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s - %(levelname)s - %(message)s',
+            handlers=[
+                logging.FileHandler(log_file),
+                logging.StreamHandler()  # This will also print to console
+            ]
+        )
+        self.logger = logging.getLogger(__name__)
+        self.log_messages = []  # Add this line to store log messages
+          # Initialize rate limiting
+        self.usage_state_file = "gemini_usage_state.json"
+        self.usage_state = self._load_usage_state()
+        
+    def get_usage_stats(self):
+        """Return current usage statistics"""
+        return {
+            "requests_today": self.usage_state["requests"],
+            "requests_remaining": 1500 - self.usage_state["requests"],
+            "tokens_used": self.usage_state["tokens"]
         }
+        
+    def _load_usage_state(self):
+        """Load usage state from a file."""
+        if os.path.exists(self.usage_state_file):
+            with open(self.usage_state_file, 'r') as file:
+                return json.load(file)
+        else:
+            return {"requests": 0, "tokens": 0}
 
-    def _identify_section_type(self, text, style):
-        """Identify the type of section for appropriate processing"""
-        if style.startswith('Heading'):
-            return 'heading'
-        elif any(term in text.lower() for term in ['abstract', 'introduction', 'conclusion']):
-            return 'main'
-        elif any(term in text.lower() for term in ['methodology', 'results', 'discussion', 'experiment']):
-            return 'technical'
-        return 'main'
+    def _save_usage_state(self):
+        """Save usage state to a file."""
+        with open(self.usage_state_file, 'w') as file:
+            json.dump(self.usage_state, file)
 
-    def _extract_special_content(self, text):
-        """Extract and preserve special content"""
-        special_contents = {
-            'equations': re.findall(self.patterns['equation'], text),
-            'citations': re.findall(self.patterns['citation'], text),
-            'references': re.findall(self.patterns['reference'], text),
-            'technical_terms': re.findall(self.patterns['technical_term'], text)
-        }
+    def _paraphrase_chunk(self, text):
+        max_retries = 3
+        retry_delay = 60  # 60 seconds delay when hitting rate limit
         
-        # Replace special content with placeholders
-        processed_text = text
-        placeholders = {}
-        
-        for content_type, contents in special_contents.items():
-            for idx, content in enumerate(contents):
-                placeholder = f"__{content_type}{idx}__"
-                placeholders[placeholder] = content
-                processed_text = processed_text.replace(content, placeholder)
-        
-        return processed_text, placeholders
+        for attempt in range(max_retries):
+            try:
+                # Check rate limits
+                if self.usage_state["requests"] >= 1500:
+                    raise Exception("Daily request limit reached.")
+                if self.usage_state["requests"] >= 15:
+                    log_msg = "Minute request limit reached. Waiting 60 seconds..."
+                    self.logger.warning(log_msg)
+                    self.log_messages.append(log_msg)  # Store the log message
+                    time.sleep(retry_delay)
+                    # Reset minute counter after waiting
+                    self.usage_state["requests"] = 0
+                    self._save_usage_state()
+                
+                prompt = f"""Paraphrase the following text while:
+                - Maintaining a formal academic tone suitable for scientific journals or Indonesian "skripsi"
+                - DO NOT modify any of the following:
+                    * Citations (e.g., [Author, Year])
+                    * Footnotes
+                    * Religious texts/quotes (from Quran, Bible, or other religious sources)
+                - Preserving all technical terms
+                - Keeping the same meaning
+                - IMPORTANT: Keep the exact same language as the input - DO NOT TRANSLATE
+                - If the input is not in English, paraphrase in that same language
+                
+                Text: {text}
+                
+                Remember: 
+                - Your paraphrase must be in the SAME LANGUAGE as the input text
+                - Keep all citations, footnotes, and religious quotes exactly as they appear in the original text"""
+                
+                # Log the prompt
+                log_msg = f"Sending prompt to LLM:\n{prompt}"
+                self.logger.info(log_msg)
+                self.log_messages.append(log_msg)  # Store the log message
+                
+                response = self.chat_session.send_message(prompt)
+                # Log the response
+                log_msg = f"Received response from LLM:\n{response.text}"
+                self.logger.info(log_msg)
+                self.log_messages.append(log_msg)  # Store the log message
 
-    def _restore_special_content(self, text, placeholders):
-        """Restore special content from placeholders"""
-        restored_text = text
-        for placeholder, content in placeholders.items():
-            restored_text = restored_text.replace(placeholder, content)
-        return restored_text
+                # Update usage state
+                self.usage_state["requests"] += 1
+                self.usage_state["tokens"] += len(response.text.split())
+                self._save_usage_state()
 
-    def _parallel_process_chunks(self, chunks, model_key):
-        """Process chunks in parallel"""
-        model = self.model_instances[model_key]
-        tokenizer = self.tokenizers[model_key]
-        max_length = self.models[model_key]['max_length']
-        batch_size = self.models[model_key]['batch_size']
-        
-        def process_batch(batch):
-            inputs = tokenizer(batch, truncation=True, padding=True,
-                             max_length=max_length, return_tensors="pt")
-            inputs = inputs.to(self.device)
-            
-            with torch.no_grad():
-                outputs = model.generate(
-                    **inputs,
-                    max_length=max_length,
-                    num_beams=5,
-                    temperature=0.6,
-                    top_p=0.95,
-                    repetition_penalty=1.2,
-                    length_penalty=1.0,
-                    do_sample=False
-                )
-            
-            return tokenizer.batch_decode(outputs, skip_special_tokens=True)
-        
-        # Process in parallel batches
-        results = []
-        with ThreadPoolExecutor() as executor:
-            futures = []
-            for i in range(0, len(chunks), batch_size):
-                batch = chunks[i:i + batch_size]
-                futures.append(executor.submit(process_batch, batch))
-            
-            for future in futures:
-                results.extend(future.result())
-        
-        return results
-
-    def paraphrase_text(self, text_structure, progress_callback: Callable = None):
-        """Enhanced paraphrasing with parallel processing and section-specific handling"""
+                return response.text
+                
+            except Exception as e:
+                if "rate limit" in str(e).lower() and attempt < max_retries - 1:
+                    wait_time = retry_delay * (attempt + 1)
+                    self.logger.warning(f"Rate limit hit. Waiting {wait_time} seconds before retry...")
+                    time.sleep(wait_time)
+                    continue
+                else:
+                    self.logger.error(f"Error in Gemini API call: {str(e)}")
+                    raise
+    
+    def paraphrase_text(self, text_structure, progress_callback=None):
         paraphrased_structure = []
         total_items = len(text_structure)
         
@@ -132,31 +158,15 @@ class DocumentParaphraser:
             if progress_callback:
                 progress_callback(f"Processing section {idx + 1}/{total_items}", idx/total_items)
             
-            # Skip certain content types
+            # Skip headings
             if item['type'] == 'heading':
                 paraphrased_structure.append(item.copy())
                 continue
             
-            # Identify section type and extract special content
-            section_type = self._identify_section_type(item['text'], item['style'])
-            text, placeholders = self._extract_special_content(item['text'])
-            
-            # Split and process
-            chunks = self._split_text_carefully(text, self.models[section_type]['max_length'])
-            paraphrased_chunks = self._parallel_process_chunks(chunks, section_type)
-            
-            # Post-process and restore special content
-            processed_chunks = [self._post_process_chunk(chunk) for chunk in paraphrased_chunks]
-            combined_text = ' '.join(processed_chunks)
-            restored_text = self._restore_special_content(combined_text, placeholders)
-            
-            # Create paraphrased item
+            # Paraphrase content
             paraphrased_item = item.copy()
-            paraphrased_item['text'] = restored_text
+            paraphrased_item['text'] = self._paraphrase_chunk(item['text'])
             paraphrased_structure.append(paraphrased_item)
-        
-        if progress_callback:
-            progress_callback("Processing complete!", 1.0)
         
         return paraphrased_structure
 
@@ -271,32 +281,66 @@ class DocumentParaphraser:
         else:
             raise ValueError(f"Unsupported output format: {file_extension}")
 
-    def _save_txt(self, text, output_path):
-        """Save text as TXT"""
+    def _save_txt(self, structured_text, output_path):
+        """Save text as TXT with basic formatting"""
         with open(output_path, 'w', encoding='utf-8') as file:
-            file.write(text) 
+            for item in structured_text:
+                if item['type'] == 'heading':
+                    file.write('\n' + '=' * 40 + '\n')
+                    file.write(item['text'].upper() + '\n')
+                    file.write('=' * 40 + '\n\n')
+                else:
+                    file.write(item['text'] + '\n\n')
 
     def process_document(self, input_path, output_path, progress_callback=None):
         """Process entire document with structure preservation"""
-        # Read document with structure
-        if progress_callback:
-            progress_callback("Reading document...", 0.1)
-        
-        document_structure = self._read_docx(input_path)
-        
-        # Paraphrase while maintaining structure
-        paraphrased_structure = self.paraphrase_text(
-            document_structure,
-            progress_callback=progress_callback
-        )
-        
-        # Save with preserved structure
-        if progress_callback:
-            progress_callback("Saving document...", 0.9)
-        
-        self._save_docx(paraphrased_structure, output_path)
-        
-        return output_path 
+        try:
+            # Verify input file exists
+            if not os.path.exists(input_path):
+                raise FileNotFoundError(f"Input file not found: {input_path}")
+
+            # Read document with structure
+            if progress_callback:
+                progress_callback("Reading document...", 0.1)
+            
+            # Determine file type and use appropriate reader
+            file_extension = os.path.splitext(input_path)[1].lower()
+            if file_extension == '.txt':
+                document_structure = self._read_txt(input_path)
+            elif file_extension == '.docx':
+                document_structure = self._read_docx(input_path)
+            elif file_extension == '.pdf':
+                document_structure = self._read_pdf(input_path)
+            else:
+                raise ValueError(f"Unsupported file format: {file_extension}")
+            
+            try:
+                paraphrased_structure = self.paraphrase_text(
+                    document_structure,
+                    progress_callback=progress_callback
+                )
+            except Exception as e:
+                self.logger.error(f"Paraphrasing error: {str(e)}")
+                raise Exception(f"An error occurred during paraphrasing: {str(e)}")
+            
+            # Save with preserved structure
+            if progress_callback:
+                progress_callback("Saving document...", 0.9)
+            
+            # Use appropriate save method based on output format
+            output_extension = os.path.splitext(output_path)[1].lower()
+            if output_extension == '.txt':
+                self._save_txt(paraphrased_structure, output_path)
+            elif output_extension == '.docx':
+                self._save_docx(paraphrased_structure, output_path)
+            else:
+                raise ValueError(f"Unsupported output format: {output_extension}")
+            
+            return output_path
+            
+        except Exception as e:
+            self.logger.error(f"Document processing error: {str(e)}")
+            raise Exception(f"An error occurred: {str(e)}")
 
     def _read_docx(self, file_path):
         """Extract text from DOCX with research paper structure preservation"""
