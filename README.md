@@ -184,15 +184,3 @@ Planned features:
 - Custom model training options
 - API integration support
 ```
-
-This comprehensive README now includes:
-1. Detailed installation and usage instructions
-2. Technical explanation of how the tool works
-3. Configuration options
-4. System requirements and limitations
-5. Troubleshooting guide
-6. Contributing guidelines
-7. Support information
-8. Future improvements
-
-Would you like me to expand on any section or add additional information?
