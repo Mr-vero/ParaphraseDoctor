@@ -21,8 +21,8 @@ A tool for paraphrasing research papers and academic documents while preserving 
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
-cd research-paper-paraphraser
+git clone https://github.com/Mr-vero/ParaphraseDoctor
+cd ParaphraseDoctor
 ```
 
 2. Install the required dependencies:
@@ -183,4 +183,3 @@ Planned features:
 - Batch processing capabilities
 - Custom model training options
 - API integration support
-```
